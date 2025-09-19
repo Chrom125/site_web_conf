@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Test JavaScript</title>
+  <style>
+    /* Barre verticale fixe */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 200px;
+      height: 100%;
+      background: #2c3e50;
+      color: #ecf0f1;
+      display: flex;
+      flex-direction: column;
+      padding-top: 20px;
+      box-sizing: border-box;
+    }
+    .sidebar button {
+      background: transparent;
+      border: none;
+      color: inherit;
+      padding: 12px 16px;
+      text-align: left;
+      width: 100%;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .sidebar button:hover, .sidebar button.active {
+      background: #34495e;
+    }
+
+    /* Contenu principal décalé pour laisser la place à la sidebar */
+    .main {
+      margin-left: 200px;
+      padding: 20px;
+    }
+
+    /* Sections (onglets) */
+    .tab {
+      display: none;
+    }
+    .tab.active {
+      display: block;
+    }
+
+    /* Centrer les titres des onglets / pages */
+    .tab h1 {
+      text-align: center;
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Centrer les h2 */
+    .tab h2 {
+      text-align: center;
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Responsive: réduire la sidebar sur petits écrans */
+    @media (max-width: 600px) {
+      .sidebar {
+        width: 140px;
+      }
+      .main {
+        margin-left: 140px;
+      }
+    }
+
+    /* Conteneur des options de langue (drapeaux côte-à-côte) */
+    .lang-container {
+      margin: 10px 16px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    /* Boutons individuels de drapeau */
+    .lang-option {
+      padding: 6px;
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 6px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .lang-option:focus {
+      outline: 2px solid rgba(255,255,255,0.35);
+    }
+    /* Style qui indique la langue sélectionnée */
+    .lang-option.selected {
+      background: #16a085;
+      border-color: #ffffff;
+      box-shadow: 0 0 0 3px rgba(255,255,255,0.12) inset;
+    }
+
+    /* Taille du drapeau */
+    .flag-img {
+      width: 36px;
+      height: auto;
+      display: inline-block;
+      line-height: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar" aria-label="Navigation">
+    <!-- Options de langue côte-à-côte -->
+    <div class="lang-container" role="tablist" aria-label="Choix de la langue">
+      <button class="lang-option" data-lang="fr" onclick="setLang('fr')" aria-pressed="false" title="Français">
+        <img src="assets/flags/drapeau_fr.png" alt="Français" class="flag-img">
+      </button>
+      <button class="lang-option" data-lang="en" onclick="setLang('en')" aria-pressed="false" title="English">
+        <img src="assets/flags/drapeau_en.png" alt="English" class="flag-img">
+      </button>
+    </div>
+
+    <!-- Remplacement des boutons de navigation par les 6 onglets (ajout "Qui sommes nous ?") -->
+    <button id="btn-accueil" class="active" onclick="showTab('accueil')" data-i18n-key="nav.home">Accueil</button>
+    <button id="btn-inscription" onclick="showTab('inscription')" data-i18n-key="nav.inscription">Inscription</button>
+    <button id="btn-programme" onclick="showTab('programme')" data-i18n-key="nav.programme">Programme</button>
+    <button id="btn-qui-sommes-nous" onclick="showTab('qui-sommes-nous')" data-i18n-key="nav.whoweare">Qui sommes nous ?</button>
+    <button id="btn-localisation" onclick="showTab('localisation')" data-i18n-key="nav.localisation">Localisation</button>
+    <button id="btn-contact" onclick="showTab('contact')" data-i18n-key="nav.contact">Contact</button>
+  </div>
+
+  <div class="main">
+    <!-- Onglet Accueil -->
+    <section id="accueil" class="tab active">
+      <h1 data-i18n-key="home.title">Bienvenue sur mon site</h1>
+      <p data-i18n-key="home.message"></p>
+    </section>
+
+    <!-- Onglet Inscription -->
+    <section id="inscription" class="tab">
+      <h1 data-i18n-key="inscription.title">Inscription</h1>
+      <!-- Conteneur responsive pour l'iframe Framaforms -->
+      <div class="iframe-container" style="position:relative;padding-bottom:75%;height:0;overflow:hidden;">
+        <!-- Remplacez ID_DU_FORMULAIRE par le slug / ID donné par framaforms -->
+        <iframe src="https://framaforms.org/inscription-jc2bjc2b-registration-1758198276?embed=true"
+                title="Formulaire d'inscription"
+                style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
+                sandbox="allow-forms allow-popups allow-same-origin allow-scripts"
+                loading="lazy">
+        </iframe>
+      </div>
+      <!-- Lien de secours si l'iframe ne s'affiche pas -->
+      <p style="margin-top:8px;">
+        Si le formulaire ne s'affiche pas, <a href="https://framaforms.org/inscription-jc2bjc2b-registration-1758198276" target="_blank" rel="noopener">ouvrez le formulaire dans un nouvel onglet</a>.
+      </p>
+    </section>
+
+    <!-- Onglet Programme -->
+    <section id="programme" class="tab">
+      <h1 data-i18n-key="programme.title">Programme</h1>
+      <p data-i18n-key="programme.text">Détails du programme ou agenda ici.</p>
+    </section>
+
+    <!-- Nouvel onglet "Qui sommes nous ?" -->
+    <section id="qui-sommes-nous" class="tab">
+      <h1 data-i18n-key="whoweare.title">Qui sommes-nous ?</h1>
+      <p data-i18n-key="whoweare.text">Présentation de l'organisation, mission, équipe, etc.</p>
+    </section>
+
+    <!-- Onglet Localisation -->
+    <section id="localisation" class="tab">
+      <h1 data-i18n-key="localisation.title">Localisation</h1>
+      <div style="width:100%;max-width:900px;margin:0 auto;">
+        <!-- Remplacez ADRESSE_URL_ENCODEE par l'adresse encodée en URL -->
+        <iframe
+          src="https://www.google.com/maps?q=I2BC+Bat+21+Auditorium,+Gif-sur-Yvette&output=embed"
+          width="100%"
+          height="450"
+          style="border:0;"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Carte">
+        </iframe>
+      </div>
+      <p style="margin-top:8px;">
+        <a href="https://www.google.com/maps/search/ADRESSE_URL_ENCODEE" target="_blank" rel="noopener">Ouvrir sur Google Maps</a>
+      </p>
+    </section>
+
+    <!-- Onglet Contact -->
+    <section id="contact" class="tab">
+      <h1 data-i18n-key="contact.title">Contact</h1>
+      <p data-i18n-key="contact.text">Informations de contact ou formulaire ici.</p>
+    </section>
+  </div>
+
+  <script>
+    // Traductions (ajout des nouvelles clés pour "Qui sommes nous ?")
+    const translations = {
+      fr: {
+        'nav.home': 'Accueil',
+        'nav.inscription': 'Inscription',
+        'nav.programme': 'Programme',
+        'nav.whoweare': 'Qui sommes-nous ?',
+        'nav.localisation': 'Localisation',
+        'nav.contact': 'Contact',
+        'home.title': 'J2CB',
+        'home.message': 'La Junior Conference aura lieu ce 13 novembre 2025 à Gif-sur-Yvette. Organisé par les étudiants du Master AMII2B de Paris-Saclay, cet événement a pour vocation de rassembler étudiants, chercheurs académiques et acteurs de l’industrie autour des avancées les plus récentes en bioinformatique. Cette journée sera l’occasion de mettre en valeur les recherches de jeunes scientifiques, de renforcer les liens entre les différentes formations de master du campus, et de favoriser les échanges entre étudiants et chercheurs confirmés. Elle offrira également un espace privilégié pour rencontrer de futurs stagiaires et doctorants. ',
+        'inscription.title': 'Inscription',
+        'inscription.text': 'Remplacez ce texte par votre contenu.',
+        'programme.title': 'Programme',
+        'programme.text': 'Détails du programme ou agenda ici.',
+        'whoweare.title': 'Qui sommes-nous ?',
+        'whoweare.text': "“Nous sommes les étudiants du Master AMI2B (Analyse, Modélisation et Ingénierie de l’Information Biologique et Médicale) de l’Université Paris-Saclay, et nous avons voulu lancer un rendez-vous qui sorte un peu de l’ordinaire : un moment de partage, de découvertes et de rencontres, à la fois scientifique et convivial. Une conférence pensée par des étudiants, pour les étudiants et les chercheurs.” ",
+        'localisation.title': 'Localisation',
+        'localisation.text': 'Adresse, carte ou informations de localisation ici.',
+        'contact.title': 'Contact',
+        'contact.text': 'Informations de contact ou formulaire ici.',
+        'lang.button': 'FR'
+      },
+      en: {
+        'nav.home': 'Home',
+        'nav.inscription': 'Registration',
+        'nav.programme': 'Program',
+        'nav.whoweare': 'Who we are',
+        'nav.localisation': 'Location',
+        'nav.contact': 'Contact',
+        'home.title': 'Welcome to my website',
+        'home.message': 'Great, JavaScript is working! 🎉',
+        'inscription.title': 'Registration',
+        'inscription.text': 'Replace this text with your content.',
+        'programme.title': 'Program',
+        'programme.text': 'Program details or schedule here.',
+        'whoweare.title': 'Who we are',
+        'whoweare.text': 'Presentation of the organization, mission, team, etc.',
+        'localisation.title': 'Location',
+        'localisation.text': 'Address, map or location details here.',
+        'contact.title': 'Contact',
+        'contact.text': 'Contact details or form here.',
+        'lang.button': 'EN'
+      }
+    };
+
+    // Langue courante (par défaut fr ou via localStorage)
+    let currentLang = localStorage.getItem('lang') || 'fr';
+
+    // chemins vers les images de drapeau et labels lisibles
+    const flags = {
+      fr: 'assets/flags/drapeau_fr.png',
+      en: 'assets/flags/drapeau_en.png'
+    };
+    const langLabels = { fr: 'Français', en: 'English' };
+
+    function setLang(lang) {
+      currentLang = lang;
+      localStorage.setItem('lang', lang);
+
+      document.querySelectorAll('[data-i18n-key]').forEach(el => {
+        const key = el.getAttribute('data-i18n-key');
+        const text = (translations[lang] && translations[lang][key]) ? translations[lang][key] : '';
+        el.textContent = text;
+      });
+
+      // Met à jour les boutons de drapeau: ajoute/enlève la classe selected et aria-pressed
+      document.querySelectorAll('.lang-option').forEach(btn => {
+        const isSelected = btn.dataset.lang === lang;
+        btn.classList.toggle('selected', isSelected);
+        btn.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
+        // mettre un title/aria-label accessible
+        btn.setAttribute('aria-label', langLabels[btn.dataset.lang] || btn.dataset.lang);
+      });
+    }
+
+    // Garder toggleLang si utile ailleurs (optionnel)
+    function toggleLang() {
+      setLang(currentLang === 'fr' ? 'en' : 'fr');
+    }
+
+    function showTab(id) {
+      document.querySelectorAll('.tab').forEach(function(sec) {
+        sec.classList.remove('active');
+      });
+      document.querySelectorAll('.sidebar button').forEach(function(btn) {
+        btn.classList.remove('active');
+      });
+      var section = document.getElementById(id);
+      if (section) section.classList.add('active');
+      var btn = document.getElementById('btn-' + id);
+      if (btn) btn.classList.add('active');
+    }
+
+    // Appliquer la langue au chargement (mettra aussi l'état sélectionné)
+    setLang(currentLang);
+  </script>
+</body>
+</html>
