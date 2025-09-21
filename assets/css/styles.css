@@ -241,7 +241,8 @@ html {
 }
 
 @media (max-width: 600px) {
-  .sidebar { display: none; }
+  /* Allow the sidebar to be toggled via the hamburger on small screens.
+     Do not hide it with display:none because that prevents the .open transform from working. */
   .main { margin-left: 0; padding: 18px; }
   .main { --sidebar-width: 0px; width: 100%; }
   /* On small screens, stack countdown under the hero */
