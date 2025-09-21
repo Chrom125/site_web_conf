@@ -1,367 +1,151 @@
+/* Clean, palette-updated stylesheet for JC2B site */
 :root{
-  --bg: #f7f9fb;
-  --card-bg: #ffffff;
-  --muted: #6b7280;
-  --accent: #0ea5a3; /* teal */
-  --accent-2: #2563eb; /* deep blue */
-  --sidebar-bg: #0f1724; /* near-black navy */
-  --sidebar-fg: #f8fafc;
-  --surface-shadow: 0 6px 18px rgba(15,23,36,0.08);
+  /* Backgrounds and surfaces */
+  --bg: #f3f6fb; /* very light cool blue */
+  --surface: #ffffff; /* cards / surfaces */
+  --muted: #556172; /* mid gray-blue for body text */
+
+  /* Primary accents */
+  --primary: #124e8c; /* deep, calm blue */
+  --primary-variant: #1a73c2; /* brighter blue for highlights */
+
+  /* Secondary / accent (warm) */
+  --accent: #ea7f2d; /* warm orange accent for calls-to-action */
+
+  /* Sidebar */
+  --sidebar-start: #0f2340; /* deep navy */
+  --sidebar-end: #123a66; /* softer navy */
+  --sidebar-fg: #f8fbff; /* near-white text on sidebar */
+
+  --surface-shadow: 0 8px 26px rgba(16,24,40,0.08);
   --radius: 12px;
   --max-content-width: 980px;
 }
 
-/* Apply primary body font */
+/* Base */
+*{box-sizing:border-box}
 body {
   margin: 0;
   font-family: 'Merriweather', Georgia, 'Times New Roman', serif;
-  color: #0b1220;
+  color: var(--muted);
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
   position: relative;
+  background-color: var(--bg);
 }
+html, body { height: 100%; }
 
-/* Full-page continuous gradient background */
+/* Background gradient layer */
 body::before{
   content: '';
-  position: fixed;
-  inset: 0;
-  z-index: -1;
+  position: fixed; inset:0; z-index:-1;
   background: linear-gradient(180deg, var(--bg) 0%, #eef2f6 100%);
-  pointer-events: none;
+  pointer-events:none;
 }
 
-/* Make page fill the viewport */
-html, body {
-  height: 100%;
-}
-
-.tab p,
-.tab li,
-.tab figcaption {
-  text-align: justify;
+/* Typography and content */
+.tab p, .tab li, .tab figcaption {
+  text-align: center;
   text-justify: inter-word;
-  -webkit-hyphens: auto;
-  -ms-hyphens: auto;
   hyphens: auto;
   color: var(--muted);
   line-height: 1.65;
 }
 
-/* Barre verticale fixe */
-.sidebar {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  width: 220px;
-  height: calc(100% - 40px);
-  /* Match the sidebar color to the header blue (accent-2) */
-  background: linear-gradient(180deg, var(--accent-2), #1e40af);
-  color: var(--sidebar-fg);
-  display: flex;
-  flex-direction: column;
-  padding: 18px;
-  box-sizing: border-box;
-  border-radius: 14px;
-  box-shadow: var(--surface-shadow);
-  gap: 8px;
-}
-.sidebar .brand {
-  display:flex;align-items:center;gap:10px;padding-bottom:6px;margin-bottom:6px;border-bottom:1px solid rgba(255,255,255,0.04)
-}
-.sidebar button {
-  background: transparent;
-  border: none;
-  color: inherit;
-  padding: 12px 14px;
+/* Keep list items left-aligned for readability while their container stays centered */
+.tab li {
   text-align: left;
-  width: 100%;
-  cursor: pointer;
-  font-size: 18px;
-  border-radius: 10px;
-  transition: background 160ms ease, transform 120ms ease;
-}
-.sidebar button:hover {
-  background: rgba(255,255,255,0.03);
-  transform: translateX(4px);
-}
-.sidebar button.active {
-  background: linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
-  box-shadow: inset 0 0 0 2px rgba(255,255,255,0.02);
+  margin-left: 1rem;
 }
 
-/* Contenu principal décalé pour laisser la place à la sidebar */
-.main {
-  /* use a CSS variable for sidebar width so we can adapt it responsively */
-  --sidebar-width: 260px;
-  margin-left: var(--sidebar-width);
-  padding: 28px;
-  box-sizing: border-box;
-  min-height: 100vh; /* ensure main covers the viewport height */
-  /* occupy remaining width beside sidebar */
-  width: calc(100% - var(--sidebar-width));
+/* Sidebar */
+.sidebar {
+  position: fixed; top:20px; left:20px;
+  width:220px; height:calc(100% - 40px);
+  background: linear-gradient(180deg, var(--sidebar-start), var(--sidebar-end));
+  color: var(--sidebar-fg);
+  display:flex; flex-direction:column; gap:8px;
+  padding:18px; border-radius:14px; box-shadow:var(--surface-shadow);
 }
+.sidebar .brand{ display:flex; align-items:center; gap:10px; padding-bottom:6px; margin-bottom:6px; border-bottom:1px solid rgba(255,255,255,0.04); }
+.sidebar button{ background:transparent; border:0; color:inherit; padding:12px 14px; text-align:left; width:100%; cursor:pointer; font-size:18px; border-radius:10px; transition: background 160ms ease, transform 120ms ease; }
+.sidebar button:hover{ background: rgba(255,255,255,0.04); transform: translateX(4px); }
+.sidebar button.active{ background: linear-gradient(90deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02)); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04); }
 
-/* Sponsors banner fixed at bottom */
-.sponsors-banner {
-  position: fixed;
-  left: calc(var(--sidebar-width) + 28px);
-  right: 20px;
-  bottom: 12px;
-  background: rgba(255,255,255,0.95);
-  border-radius: 10px;
-  padding: 10px 14px;
-  box-shadow: 0 6px 18px rgba(11,18,32,0.08);
-  display: flex;
-  gap: 18px;
-  align-items: center;
-  z-index: 2000;
-}
-.sponsors-banner a { color: var(--accent-2); font-weight:600; text-decoration:none; }
-
-/* Prevent main content from being hidden by the banner */
+/* Main content */
+.main{ --sidebar-width:260px; margin-left:var(--sidebar-width); padding:28px; min-height:100vh; width:calc(100% - var(--sidebar-width)); text-align: center; }
 .main { padding-bottom: 110px; }
 
-/* Sections (onglets) */
-.tab {
-  display: block; /* stacked vertically */
-  padding: 20px 0;
-  margin: 0;
-}
-.tab.active {
-  transform: none;
-}
+/* Sponsors */
+.sponsors-banner{ position:fixed; left:calc(var(--sidebar-width) + 28px); right:20px; bottom:12px; background: rgba(255,255,255,0.98); border-radius:10px; padding:10px 14px; box-shadow:0 8px 26px rgba(16,24,40,0.06); display:flex; gap:18px; align-items:center; z-index:2000; }
+.sponsors-banner a{ color:var(--primary-variant); font-weight:600; text-decoration:none }
 
-/* Smooth scrolling for in-page navigation */
-html {
-  scroll-behavior: smooth;
-}
+/* Sections */
+.tab{ display:block; padding:20px 0; margin:0; }
+.tab.active{ transform:none }
+html{ scroll-behavior: smooth }
+.tab{ scroll-margin-top:12px }
 
-/* Ensure sections don't sit under any fixed header (adjust if needed) */
-.tab {
-  scroll-margin-top: 12px;
-}
+/* Programme specific layout */
+.programme-text { text-align: center; max-width: 880px; margin: 0 auto 18px; color: var(--muted); }
+.figures { display: flex; flex-direction: row; gap: 20px; align-items: flex-start; justify-content: center; flex-wrap: wrap; margin-top: 12px; }
+.figures .caption { display: flex; flex-direction: column; align-items: center; text-align: center; background: transparent; border-radius: 8px; padding: 6px; }
+.figures .caption img { width: 200px; height: 200px; object-fit: cover; border-radius: 8px; display:block; }
+.figures .caption figcaption { margin-top: 8px; font-size: 14px; color: var(--muted); }
 
-/* Countdown styles */
-.countdown {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  justify-content: center;
-  margin: 18px 0 12px;
-}
-.countdown-number {
-  font-size: 56px;
-  font-weight: 800;
-  color: var(--accent);
-  font-family: 'Montserrat', 'Segoe UI', Roboto, Arial, sans-serif;
-  padding: 6px 12px;
-  background: linear-gradient(180deg, rgba(14,165,163,0.06), rgba(37,99,235,0.04));
-  border-radius: 8px;
-}
-.countdown-label {
-  font-size: 18px;
-  color: var(--muted);
-}
+/* Countdown */
+.countdown{ display:flex; align-items:center; gap:14px; justify-content:center; margin:18px 0 12px }
+.countdown-number{ font-size:56px; font-weight:800; color:var(--accent); font-family:'Montserrat','Segoe UI',Roboto,Arial,sans-serif; padding:6px 12px; background: linear-gradient(180deg, rgba(234,127,45,0.06), rgba(26,115,194,0.04)); border-radius:8px }
+.countdown-label{ font-size:18px; color:var(--muted) }
 
-/* Logo/title image */
-.site-logo {
-  width: 100%;
-  height: auto;
-  display: block;
-  margin: 0 auto 8px;
-  max-width: 100%;
-}
+/* Logo */
+.site-logo{ width:100%; height:auto; display:block; margin:0 auto 8px; max-width:100% }
 
-/* Screen-reader-only helper */
-.sr-only {
-  position: absolute !important;
-  width: 1px; height: 1px;
-  padding: 0; margin: -1px;
-  overflow: hidden; clip: rect(0,0,0,0);
-  white-space: nowrap; border: 0;
-}
+.sr-only{ position:absolute!important; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0 }
 
-/* Responsive logo sizes */
-@media (max-width: 1024px) {
-  .site-logo { max-width: none; }
-}
-@media (max-width: 800px) {
-  .site-logo { max-width: none; }
-}
-@media (max-width: 480px) {
-  .site-logo { max-width: none; max-height: 140px; }
-}
+/* Headings */
+.tab h1{ font-family:'Montserrat','Segoe UI',Roboto,Arial,sans-serif; text-align:center; margin-top:0; margin-bottom:.5rem; color:var(--primary) }
+.tab h2{ text-align:center; margin-top:0; margin-bottom:.5rem }
 
-/* Centrer les titres des onglets / pages */
-.tab h1 {
-  font-family: 'Montserrat', 'Segoe UI', Roboto, Arial, sans-serif;
-  text-align: center;
-  margin-top: 0;
-  margin-bottom: 0.5rem;
-  color: var(--accent-2);
-}
+/* Hero */
+.hero{ position:relative; padding:8px 0 18px }
+.hero-body{ max-width:900px; margin:0 auto }
+.hero-countdown{ position:static; display:flex; justify-content:center; align-items:center; gap:14px; margin-top:12px; background:transparent; padding:0 }
+.hero-countdown .countdown-number{ font-size:48px; color:var(--accent); padding:4px 8px; font-weight:700; background:none }
+.hero-countdown .countdown-text{ font-size:14px; color:var(--muted); display:flex; flex-direction:column }
+.hero-countdown .countdown-until{ font-weight:600; color:var(--primary-variant) }
 
-/* Hero area and overlay countdown */
-.hero {
-  position: relative;
-  padding: 8px 0 18px;
-}
-.hero-title { margin: 0; }
-.hero-body { max-width: 900px; margin: 0 auto; }
-.hero-countdown {
-  position: static;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 14px;
-  margin-top: 12px;
-  background: transparent;
-  padding: 0;
-}
-.hero-countdown .countdown-number { font-size: 48px; color: var(--accent); padding: 4px 8px; font-weight:700; background: none; border-radius: 0; box-shadow: none; }
-.hero-countdown .countdown-text { font-size: 14px; color: var(--muted); display:flex;flex-direction:column; }
-.hero-countdown .countdown-until { font-weight:600; color:var(--accent-2); }
+/* Flags/lang */
+.lang-container{ margin:10px 16px; display:flex; gap:8px; align-items:center }
+.lang-option{ padding:6px; background:transparent; border:1px solid transparent; border-radius:6px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center }
+.lang-option:focus{ outline:2px solid rgba(255,255,255,0.35) }
+.lang-option.selected{ background:#16a085; border-color:#fff; box-shadow:0 0 0 3px rgba(255,255,255,0.12) inset }
+.flag-img{ width:36px; height:auto; display:inline-block }
 
-/* Centrer les h2 */
-.tab h2 {
-  text-align: center;
-  margin-top: 0;
-  margin-bottom: 0.5rem;
+/* Nav toggle */
+.nav-toggle{ display:none; position:fixed; top:10px; left:10px; z-index:1001; background:var(--primary); color:#fff; border:none; padding:10px 12px; font-size:20px; border-radius:6px; cursor:pointer }
+
+.sidebar{ transition: transform 240ms ease-in-out }
+@media (max-width:800px){
+  .nav-toggle{ display:inline-flex }
+  .sidebar{ width:260px; height:100%; transform:translateX(-110%); position:fixed; z-index:1000; box-shadow:2px 0 8px rgba(0,0,0,0.2) }
+  .sidebar.open{ transform:translateX(0) }
+  .main{ margin-left:0; padding:16px }
+  .countdown-number{ font-size:36px }
+  .sidebar button, .lang-option{ padding:14px 18px; font-size:18px }
 }
-
-/* Responsive: réduire la sidebar sur petits écrans */
-@media (max-width: 900px) {
-  .main { margin-left: 20px; margin-right: 20px; }
-  .sidebar { position: fixed; left: 12px; top: 12px; width: 200px; }
-  .main { --sidebar-width: 220px; }
-  /* smaller hero countdown on tablets (still below the logo) */
-  .hero-countdown { margin-top: 10px; }
-  .sponsors-banner { left: 20px; right: 20px; }
+@media (max-width:600px){
+  .main{ margin-left:0; padding:18px; }
+  .main{ --sidebar-width:0px; width:100% }
+  .hero-countdown{ display:block; width:100%; margin:8px 0 0 }
+  .hero-countdown .countdown-number{ font-size:36px }
+  .hero-countdown .countdown-text{ font-size:14px }
+  /* Stack figures on narrow screens */
+  .figures { flex-direction: column; gap: 14px; }
 }
+@media (max-width:480px){ .sponsors-banner{ position:static; margin:18px 0 0; width:auto; border-radius:8px } .main{ padding-bottom:40px } }
 
-@media (max-width: 600px) {
-  /* Allow the sidebar to be toggled via the hamburger on small screens.
-     Do not hide it with display:none because that prevents the .open transform from working. */
-  .main { margin-left: 0; padding: 18px; }
-  .main { --sidebar-width: 0px; width: 100%; }
-  /* On small screens, stack countdown under the hero */
-  .hero-countdown { position: static; display: block; width: 100%; box-shadow: none; background: transparent; padding: 0; margin: 8px 0 0; }
-  .hero-countdown .countdown-number { font-size: 36px; background: none; padding: 0; }
-  .hero-countdown .countdown-text { font-size: 14px; }
-}
-
-@media (max-width: 480px) {
-  .sponsors-banner { position: static; margin: 18px 0 0; width: auto; border-radius: 8px; }
-  .main { padding-bottom: 40px; }
-}
-
-/* Larger desktop header */
-@media (min-width: 1100px) {
-  .tab h1 { font-size: 64px; }
-  .site-logo { max-height: 360px; width: auto; }
-}
-
-@media (min-width: 1400px) {
-  .tab h1 { font-size: 84px; }
-  .site-logo { max-height: 520px; width: auto; }
-}
-
-@media (min-width: 1800px) {
-  .site-logo { max-height: 720px; }
-}
-
-/* Conteneur des options de langue (drapeaux côte-à-côte) */
-.lang-container {
-  margin: 10px 16px;
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-/* Boutons individuels de drapeau */
-.lang-option {
-  padding: 6px;
-  background: transparent;
-  border: 1px solid transparent;
-  border-radius: 6px;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-.lang-option:focus {
-  outline: 2px solid rgba(255,255,255,0.35);
-}
-/* Style qui indique la langue sélectionnée */
-.lang-option.selected {
-  background: #16a085;
-  border-color: #ffffff;
-  box-shadow: 0 0 0 3px rgba(255,255,255,0.12) inset;
-}
-
-/* Taille du drapeau */
-.flag-img {
-  width: 36px;
-  height: auto;
-  display: inline-block;
-  line-height: 1;
-}
-
-/* Mobile navigation: hamburger toggle and responsive behavior */
-.nav-toggle {
-  display: none; /* shown only on small screens */
-  position: fixed;
-  top: 10px;
-  left: 10px;
-  z-index: 1001;
-  background: #2c3e50;
-  color: #ecf0f1;
-  border: none;
-  padding: 10px 12px;
-  font-size: 20px;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.sidebar {
-  transition: transform 240ms ease-in-out;
-}
-
-@media (max-width: 800px) {
-  .nav-toggle {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  /* Hide the permanent sidebar and allow toggling */
-  .sidebar {
-    width: 260px;
-    height: 100%;
-    transform: translateX(-110%);
-    position: fixed;
-    z-index: 1000;
-    box-shadow: 2px 0 8px rgba(0,0,0,0.2);
-  }
-
-  /* When sidebar has class 'open' it becomes visible */
-  .sidebar.open {
-    transform: translateX(0);
-  }
-
-  /* Main content should not reserve space for sidebar on small screens */
-  .main {
-    margin-left: 0;
-    padding: 16px;
-  }
-
-  .countdown-number {
-    font-size: 36px;
-  }
-
-  /* Bigger touch targets */
-  .sidebar button, .lang-option {
-    padding: 14px 18px;
-    font-size: 18px;
-  }
-}
+/* Desktop tweaks */
+@media (min-width:1100px){ .tab h1{ font-size:64px } .site-logo{ max-height:360px; width:auto } }
+@media (min-width:1400px){ .tab h1{ font-size:84px } .site-logo{ max-height:520px; width:auto } }
+@media (min-width:1800px){ .site-logo{ max-height:720px } }
