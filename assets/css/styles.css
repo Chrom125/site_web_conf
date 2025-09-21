@@ -104,3 +104,58 @@
   display: inline-block;
   line-height: 1;
 }
+
+/* Mobile navigation: hamburger toggle and responsive behavior */
+.nav-toggle {
+  display: none; /* shown only on small screens */
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 1001;
+  background: #2c3e50;
+  color: #ecf0f1;
+  border: none;
+  padding: 10px 12px;
+  font-size: 20px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.sidebar {
+  transition: transform 240ms ease-in-out;
+}
+
+@media (max-width: 800px) {
+  .nav-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Hide the permanent sidebar and allow toggling */
+  .sidebar {
+    width: 260px;
+    height: 100%;
+    transform: translateX(-110%);
+    position: fixed;
+    z-index: 1000;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.2);
+  }
+
+  /* When sidebar has class 'open' it becomes visible */
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  /* Main content should not reserve space for sidebar on small screens */
+  .main {
+    margin-left: 0;
+    padding: 16px;
+  }
+
+  /* Bigger touch targets */
+  .sidebar button, .lang-option {
+    padding: 14px 18px;
+    font-size: 18px;
+  }
+}

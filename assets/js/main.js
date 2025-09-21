@@ -100,6 +100,35 @@ function showTab(id) {
 // Wrap in DOMContentLoaded to be safe when loading with defer
 function init() {
   setLang(currentLang);
+  // Mobile nav toggle wiring
+  const navToggle = document.getElementById('nav-toggle');
+  const sidebar = document.querySelector('.sidebar');
+  if (navToggle && sidebar) {
+    // Toggle .open class to show/hide the sidebar on mobile
+    navToggle.addEventListener('click', function() {
+      const isOpen = sidebar.classList.toggle('open');
+      navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+
+    // Close sidebar automatically when a nav button is clicked, but only on small screens
+    sidebar.querySelectorAll('button').forEach(btn => {
+      btn.addEventListener('click', function() {
+        if (window.matchMedia('(max-width: 800px)').matches) {
+          sidebar.classList.remove('open');
+          navToggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+
+    // Ensure the sidebar is visible on desktop when resizing from mobile
+    window.addEventListener('resize', function() {
+      if (!window.matchMedia('(max-width: 800px)').matches) {
+        // Remove mobile-only class so desktop shows permanent sidebar
+        sidebar.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
 }
 
 if (document.readyState === 'loading') {
