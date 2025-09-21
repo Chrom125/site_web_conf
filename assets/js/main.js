@@ -21,6 +21,8 @@ const translations = {
     'localisation.text': 'Adresse, carte ou informations de localisation ici.',
     'contact.title': 'Contact',
     'contact.text': 'Informations de contact ou formulaire ici.',
+    'countdown.label': 'jours restants',
+    'countdown.past': "L'événement est passé",
     'lang.button': 'FR'
   },
   en: {
@@ -44,6 +46,8 @@ const translations = {
     'localisation.text': 'Address, map or location details here.',
     'contact.title': 'Contact',
     'contact.text': 'Contact details or form here.',
+    'countdown.label': 'days remaining',
+    'countdown.past': 'event passed',
     'lang.button': 'EN'
   }
 };
@@ -129,6 +133,39 @@ function init() {
       }
     });
   }
+
+  // Countdown: days until 13 November 2025
+  function updateCountdown() {
+    const el = document.getElementById('countdown-days');
+    const label = document.querySelector('[data-i18n-key="countdown.label"]');
+    if (!el) return;
+
+    const today = new Date();
+    // Target at start of day local time
+    const target = new Date(2025, 10, 13); // months are 0-based: 10 = November
+
+    // Compute difference in days (floor)
+    const msPerDay = 24 * 60 * 60 * 1000;
+    const diffMs = target.setHours(0,0,0,0) - new Date(today.getFullYear(), today.getMonth(), today.getDate()).getTime();
+    const days = Math.ceil(diffMs / msPerDay);
+
+    if (diffMs <= 0) {
+      el.textContent = '0';
+      if (label) {
+        label.textContent = (translations[currentLang] && translations[currentLang]['countdown.past']) || 'événement terminé';
+      }
+      return;
+    }
+
+    el.textContent = String(days);
+    if (label) {
+      label.textContent = (translations[currentLang] && translations[currentLang]['countdown.label']) || 'jours restants';
+    }
+  }
+
+  // Update immediately, then once per hour to be safe (daily would also work but hourly ensures day boundary accuracy)
+  updateCountdown();
+  setInterval(updateCountdown, 60 * 60 * 1000);
 }
 
 if (document.readyState === 'loading') {
