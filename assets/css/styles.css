@@ -1,0 +1,106 @@
+.body {
+  font-family: 'Merriweather', serif;
+}
+
+/* Barre verticale fixe */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 200px;
+  height: 100%;
+  background: #2c3e50;
+  color: #ecf0f1;
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+  box-sizing: border-box;
+}
+.sidebar button {
+  background: transparent;
+  border: none;
+  color: inherit;
+  padding: 12px 16px;
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+  font-size: 16px;
+}
+.sidebar button:hover, .sidebar button.active {
+  background: #34495e;
+}
+
+/* Contenu principal décalé pour laisser la place à la sidebar */
+.main {
+  margin-left: 200px;
+  padding: 20px;
+}
+
+/* Sections (onglets) */
+.tab {
+  display: none;
+}
+.tab.active {
+  display: block;
+}
+
+/* Centrer les titres des onglets / pages */
+.tab h1 {
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+/* Centrer les h2 */
+.tab h2 {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+/* Responsive: réduire la sidebar sur petits écrans */
+@media (max-width: 600px) {
+  .sidebar {
+    width: 140px;
+  }
+  .main {
+    margin-left: 140px;
+  }
+}
+
+/* Conteneur des options de langue (drapeaux côte-à-côte) */
+.lang-container {
+  margin: 10px 16px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+/* Boutons individuels de drapeau */
+.lang-option {
+  padding: 6px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.lang-option:focus {
+  outline: 2px solid rgba(255,255,255,0.35);
+}
+/* Style qui indique la langue sélectionnée */
+.lang-option.selected {
+  background: #16a085;
+  border-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(255,255,255,0.12) inset;
+}
+
+/* Taille du drapeau */
+.flag-img {
+  width: 36px;
+  height: auto;
+  display: inline-block;
+  line-height: 1;
+}
