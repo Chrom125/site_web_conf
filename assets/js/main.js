@@ -20,8 +20,9 @@ const translations = {
     'localisation.title': 'Localisation',
     'localisation.text': 'Adresse, carte ou informations de localisation ici.',
     'contact.title': 'Contact',
-    'contact.text': 'Informations de contact ou formulaire ici.',
+    'contact.text': 'Adresse mail : jc2b.paris.saclay@gmail.com',
     'countdown.label': 'jours restants',
+    'countdown.until': "jusqu'à JC2B",
     'countdown.past': "L'événement est passé",
     'lang.button': 'FR'
   },
@@ -45,8 +46,9 @@ const translations = {
     'localisation.title': 'Location',
     'localisation.text': 'Address, map or location details here.',
     'contact.title': 'Contact',
-    'contact.text': 'Contact details or form here.',
+    'contact.text': 'Mail adress : jc2b.paris.saclay@gmail.com',
     'countdown.label': 'days remaining',
+    'countdown.until': 'until JC2B',
     'countdown.past': 'event passed',
     'lang.button': 'EN'
   }
@@ -161,7 +163,8 @@ function init() {
   // Countdown: days until 13 November 2025
   function updateCountdown() {
     const el = document.getElementById('countdown-days');
-    const label = document.querySelector('[data-i18n-key="countdown.label"]');
+  const label = document.querySelector('[data-i18n-key="countdown.label"]');
+  const until = document.querySelector('[data-i18n-key="countdown.until"]');
     if (!el) return;
 
     const today = new Date();
@@ -178,12 +181,18 @@ function init() {
       if (label) {
         label.textContent = (translations[currentLang] && translations[currentLang]['countdown.past']) || 'événement terminé';
       }
+      if (until) {
+        until.textContent = '';
+      }
       return;
     }
 
     el.textContent = String(days);
     if (label) {
       label.textContent = (translations[currentLang] && translations[currentLang]['countdown.label']) || 'jours restants';
+    }
+    if (until) {
+      until.textContent = (translations[currentLang] && translations[currentLang]['countdown.until']) || "jusqu'à JC2B";
     }
   }
 

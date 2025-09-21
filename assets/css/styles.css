@@ -1,11 +1,39 @@
-.body {
-  /* kept for backwards-compat but primary rule below */
-  font-family: 'Merriweather', serif;
+:root{
+  --bg: #f7f9fb;
+  --card-bg: #ffffff;
+  --muted: #6b7280;
+  --accent: #0ea5a3; /* teal */
+  --accent-2: #2563eb; /* deep blue */
+  --sidebar-bg: #0f1724; /* near-black navy */
+  --sidebar-fg: #f8fafc;
+  --surface-shadow: 0 6px 18px rgba(15,23,36,0.08);
+  --radius: 12px;
+  --max-content-width: 980px;
 }
 
 /* Apply primary body font */
 body {
+  margin: 0;
   font-family: 'Merriweather', Georgia, 'Times New Roman', serif;
+  color: #0b1220;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  position: relative;
+}
+
+/* Full-page continuous gradient background */
+body::before{
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, var(--bg) 0%, #eef2f6 100%);
+  pointer-events: none;
+}
+
+/* Make page fill the viewport */
+html, body {
+  height: 100%;
 }
 
 .tab p,
@@ -16,50 +44,92 @@ body {
   -webkit-hyphens: auto;
   -ms-hyphens: auto;
   hyphens: auto;
+  color: var(--muted);
+  line-height: 1.65;
 }
 
 /* Barre verticale fixe */
 .sidebar {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 200px;
-  height: 100%;
-  background: #2c3e50;
-  color: #ecf0f1;
+  top: 20px;
+  left: 20px;
+  width: 220px;
+  height: calc(100% - 40px);
+  /* Match the sidebar color to the header blue (accent-2) */
+  background: linear-gradient(180deg, var(--accent-2), #1e40af);
+  color: var(--sidebar-fg);
   display: flex;
   flex-direction: column;
-  padding-top: 20px;
+  padding: 18px;
   box-sizing: border-box;
+  border-radius: 14px;
+  box-shadow: var(--surface-shadow);
+  gap: 8px;
+}
+.sidebar .brand {
+  display:flex;align-items:center;gap:10px;padding-bottom:6px;margin-bottom:6px;border-bottom:1px solid rgba(255,255,255,0.04)
 }
 .sidebar button {
   background: transparent;
   border: none;
   color: inherit;
-  padding: 12px 16px;
+  padding: 12px 14px;
   text-align: left;
   width: 100%;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 18px;
+  border-radius: 10px;
+  transition: background 160ms ease, transform 120ms ease;
 }
-.sidebar button:hover, .sidebar button.active {
-  background: #34495e;
+.sidebar button:hover {
+  background: rgba(255,255,255,0.03);
+  transform: translateX(4px);
+}
+.sidebar button.active {
+  background: linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,0.02);
 }
 
 /* Contenu principal décalé pour laisser la place à la sidebar */
 .main {
-  margin-left: 200px;
-  padding: 20px;
+  /* use a CSS variable for sidebar width so we can adapt it responsively */
+  --sidebar-width: 260px;
+  margin-left: var(--sidebar-width);
+  padding: 28px;
+  box-sizing: border-box;
+  min-height: 100vh; /* ensure main covers the viewport height */
+  /* occupy remaining width beside sidebar */
+  width: calc(100% - var(--sidebar-width));
 }
+
+/* Sponsors banner fixed at bottom */
+.sponsors-banner {
+  position: fixed;
+  left: calc(var(--sidebar-width) + 28px);
+  right: 20px;
+  bottom: 12px;
+  background: rgba(255,255,255,0.95);
+  border-radius: 10px;
+  padding: 10px 14px;
+  box-shadow: 0 6px 18px rgba(11,18,32,0.08);
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  z-index: 2000;
+}
+.sponsors-banner a { color: var(--accent-2); font-weight:600; text-decoration:none; }
+
+/* Prevent main content from being hidden by the banner */
+.main { padding-bottom: 110px; }
 
 /* Sections (onglets) */
 .tab {
-  display: block; /* show all sections stacked vertically */
-  padding: 24px 0;
+  display: block; /* stacked vertically */
+  padding: 20px 0;
+  margin: 0;
 }
 .tab.active {
-  /* kept for compatibility (no-op visually) */
-  display: block;
+  transform: none;
 }
 
 /* Smooth scrolling for in-page navigation */
@@ -75,20 +145,23 @@ html {
 /* Countdown styles */
 .countdown {
   display: flex;
-  align-items: baseline;
-  gap: 12px;
+  align-items: center;
+  gap: 14px;
   justify-content: center;
-  margin: 18px 0 8px;
+  margin: 18px 0 12px;
 }
 .countdown-number {
-  font-size: 48px;
-  font-weight: 700;
-  color: #16a085;
+  font-size: 56px;
+  font-weight: 800;
+  color: var(--accent);
   font-family: 'Montserrat', 'Segoe UI', Roboto, Arial, sans-serif;
+  padding: 6px 12px;
+  background: linear-gradient(180deg, rgba(14,165,163,0.06), rgba(37,99,235,0.04));
+  border-radius: 8px;
 }
 .countdown-label {
   font-size: 18px;
-  color: #333;
+  color: var(--muted);
 }
 
 /* Logo/title image */
@@ -97,7 +170,7 @@ html {
   height: auto;
   display: block;
   margin: 0 auto 8px;
-  max-width: none;
+  max-width: 100%;
 }
 
 /* Screen-reader-only helper */
@@ -126,7 +199,29 @@ html {
   text-align: center;
   margin-top: 0;
   margin-bottom: 0.5rem;
+  color: var(--accent-2);
 }
+
+/* Hero area and overlay countdown */
+.hero {
+  position: relative;
+  padding: 8px 0 18px;
+}
+.hero-title { margin: 0; }
+.hero-body { max-width: 900px; margin: 0 auto; }
+.hero-countdown {
+  position: static;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  margin-top: 12px;
+  background: transparent;
+  padding: 0;
+}
+.hero-countdown .countdown-number { font-size: 48px; color: var(--accent); padding: 4px 8px; font-weight:700; background: none; border-radius: 0; box-shadow: none; }
+.hero-countdown .countdown-text { font-size: 14px; color: var(--muted); display:flex;flex-direction:column; }
+.hero-countdown .countdown-until { font-weight:600; color:var(--accent-2); }
 
 /* Centrer les h2 */
 .tab h2 {
@@ -136,13 +231,43 @@ html {
 }
 
 /* Responsive: réduire la sidebar sur petits écrans */
+@media (max-width: 900px) {
+  .main { margin-left: 20px; margin-right: 20px; }
+  .sidebar { position: fixed; left: 12px; top: 12px; width: 200px; }
+  .main { --sidebar-width: 220px; }
+  /* smaller hero countdown on tablets (still below the logo) */
+  .hero-countdown { margin-top: 10px; }
+  .sponsors-banner { left: 20px; right: 20px; }
+}
+
 @media (max-width: 600px) {
-  .sidebar {
-    width: 140px;
-  }
-  .main {
-    margin-left: 140px;
-  }
+  .sidebar { display: none; }
+  .main { margin-left: 0; padding: 18px; }
+  .main { --sidebar-width: 0px; width: 100%; }
+  /* On small screens, stack countdown under the hero */
+  .hero-countdown { position: static; display: block; width: 100%; box-shadow: none; background: transparent; padding: 0; margin: 8px 0 0; }
+  .hero-countdown .countdown-number { font-size: 36px; background: none; padding: 0; }
+  .hero-countdown .countdown-text { font-size: 14px; }
+}
+
+@media (max-width: 480px) {
+  .sponsors-banner { position: static; margin: 18px 0 0; width: auto; border-radius: 8px; }
+  .main { padding-bottom: 40px; }
+}
+
+/* Larger desktop header */
+@media (min-width: 1100px) {
+  .tab h1 { font-size: 64px; }
+  .site-logo { max-height: 360px; width: auto; }
+}
+
+@media (min-width: 1400px) {
+  .tab h1 { font-size: 84px; }
+  .site-logo { max-height: 520px; width: auto; }
+}
+
+@media (min-width: 1800px) {
+  .site-logo { max-height: 720px; }
 }
 
 /* Conteneur des options de langue (drapeaux côte-à-côte) */

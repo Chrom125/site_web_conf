@@ -24,33 +24,40 @@
     </div>
 
     <!-- Remplacement des boutons de navigation par les 6 onglets (ajout "Qui sommes nous ?") -->
-    <button id="btn-accueil" class="active" onclick="showTab('accueil')" data-i18n-key="nav.home">Accueil</button>
-    <button id="btn-inscription" onclick="showTab('inscription')" data-i18n-key="nav.inscription">Inscription</button>
-    <button id="btn-programme" onclick="showTab('programme')" data-i18n-key="nav.programme">Programme</button>
-    <button id="btn-qui-sommes-nous" onclick="showTab('qui-sommes-nous')" data-i18n-key="nav.whoweare">Qui sommes nous ?</button>
-    <button id="btn-localisation" onclick="showTab('localisation')" data-i18n-key="nav.localisation">Localisation</button>
-    <button id="btn-contact" onclick="showTab('contact')" data-i18n-key="nav.contact">Contact</button>
+  <button id="btn-accueil" class="active" data-i18n-key="nav.home">Accueil</button>
+  <button id="btn-inscription" data-i18n-key="nav.inscription">Inscription</button>
+  <button id="btn-programme" data-i18n-key="nav.programme">Programme</button>
+  <button id="btn-qui-sommes-nous" data-i18n-key="nav.whoweare">Qui sommes nous ?</button>
+  <button id="btn-localisation" data-i18n-key="nav.localisation">Localisation</button>
+  <button id="btn-contact" data-i18n-key="nav.contact">Contact</button>
   </div>
 
   <div class="main">
     <!-- Onglet Accueil -->
     <section id="accueil" class="tab active">
-      <h1>
-  <img src="assets/image/JC2B_bof.svg" alt="" class="site-logo">
-        <span class="sr-only" data-i18n-key="home.title">JC2B</span>
-      </h1>
-      <p data-i18n-key="home.message"></p>
-      <!-- Countdown to event -->
-      <div class="countdown" role="timer" aria-live="polite" aria-atomic="true">
-        <div class="countdown-number" id="countdown-days">--</div>
-        <div class="countdown-label" data-i18n-key="countdown.label">jours restants</div>
+      <div class="hero">
+        <h1 class="hero-title">
+          <img src="assets/image/JC2B_bof.svg" alt="JC2B" class="site-logo">
+          <span class="sr-only" data-i18n-key="home.title">JC2B</span>
+        </h1>
+        <!-- Countdown overlayed on hero (desktop) -->
+        <div class="hero-countdown" role="timer" aria-live="polite" aria-atomic="true">
+          <div class="countdown-number" id="countdown-days">--</div>
+          <div class="countdown-text">
+            <div class="countdown-label" data-i18n-key="countdown.label">jours restants</div>
+            <div class="countdown-until" data-i18n-key="countdown.until">jusqu'à JC2B</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-body">
+        <p data-i18n-key="home.message"></p>
       </div>
     </section>
 
     <!-- Onglet Inscription -->
     <section id="inscription" class="tab">
       <h1 data-i18n-key="inscription.title">Inscription</h1>
-      <p data-i18n-key="inscription.text"></p>
+      <p style = "text-align: center;" data-i18n-key="inscription.text"></p>
       <!-- Conteneur responsive pour l'iframe Framaforms -->
       <div class="iframe-container" style="position:relative;padding-bottom:75%;height:0;overflow:hidden;">
         <!-- Remplacez ID_DU_FORMULAIRE par le slug / ID donné par framaforms -->
@@ -133,5 +140,11 @@
   </div>
 
   <script src="assets/js/main.js" defer></script>
+  <!-- Sponsors banner -->
+  <div class="sponsors-banner" role="contentinfo" aria-label="Sponsors">
+    <div>Partenaires :</div>
+    <a href="https://www.universite-paris-saclay.fr/" target="_blank" rel="noopener">Université Paris-Saclay</a>
+    <a href="https://www.i2bc.paris-saclay.fr/" target="_blank" rel="noopener">I2BC</a>
+  </div>
 </body>
 </html>
