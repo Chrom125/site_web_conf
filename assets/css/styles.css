@@ -54,10 +54,22 @@ body {
 
 /* Sections (onglets) */
 .tab {
-  display: none;
+  display: block; /* show all sections stacked vertically */
+  padding: 24px 0;
 }
 .tab.active {
+  /* kept for compatibility (no-op visually) */
   display: block;
+}
+
+/* Smooth scrolling for in-page navigation */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Ensure sections don't sit under any fixed header (adjust if needed) */
+.tab {
+  scroll-margin-top: 12px;
 }
 
 /* Countdown styles */

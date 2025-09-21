@@ -114,9 +114,16 @@ function init() {
       navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
     });
 
-    // Close sidebar automatically when a nav button is clicked, but only on small screens
-    sidebar.querySelectorAll('button').forEach(btn => {
-      btn.addEventListener('click', function() {
+    // Make nav buttons scroll to their section instead of toggling visibility
+    sidebar.querySelectorAll('button[id^="btn-"]').forEach(btn => {
+      const id = btn.id.replace('btn-', '');
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.getElementById(id);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        // On mobile, close the sidebar after navigation
         if (window.matchMedia('(max-width: 800px)').matches) {
           sidebar.classList.remove('open');
           navToggle.setAttribute('aria-expanded', 'false');
@@ -132,6 +139,23 @@ function init() {
         navToggle.setAttribute('aria-expanded', 'false');
       }
     });
+
+    // Observe sections to update active button in sidebar as the user scrolls
+    const sections = document.querySelectorAll('.tab');
+    const options = { root: null, rootMargin: '0px 0px -50% 0px', threshold: 0 };
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const id = entry.target.id;
+        const btn = document.getElementById('btn-' + id);
+        if (btn) {
+          if (entry.isIntersecting) {
+            document.querySelectorAll('.sidebar button').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+          }
+        }
+      });
+    }, options);
+    sections.forEach(s => observer.observe(s));
   }
 
   // Countdown: days until 13 November 2025
