@@ -4,16 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Test JavaScript</title>
-  <!-- Google Fonts: Merriweather for body, Montserrat for headings -->
+  <!-- Google Fonts : Merriweather pour le corps, Montserrat pour les titres -->
   <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
-  <!-- Mobile nav toggle -->
+  <!-- Bouton de navigation mobile -->
   <button id="nav-toggle" class="nav-toggle" aria-label="Ouvrir la navigation" aria-expanded="false">☰</button>
 
   <div class="sidebar" aria-label="Navigation">
-    <!-- Options de langue côte-à-côte -->
+  <!-- Options de langue côte à côte -->
     <div class="lang-container" role="tablist" aria-label="Choix de la langue">
       <button class="lang-option" data-lang="fr" onclick="setLang('fr')" aria-pressed="false" title="Français">
         <img src="assets/flags/drapeau_fr.png" alt="Français" class="flag-img">
@@ -23,11 +23,11 @@
       </button>
     </div>
 
-    <!-- Remplacement des boutons de navigation par les 6 onglets (ajout "Qui sommes nous ?") -->
+  <!-- Remplacement des boutons de navigation par les 6 onglets (ajout de « Qui sommes-nous ? ») -->
   <button id="btn-accueil" class="active" data-i18n-key="nav.home">Accueil</button>
   <button id="btn-inscription" data-i18n-key="nav.inscription">Inscription</button>
   <button id="btn-programme" data-i18n-key="nav.programme">Programme</button>
-  <button id="btn-qui-sommes-nous" data-i18n-key="nav.whoweare">Qui sommes nous ?</button>
+  <button id="btn-qui-sommes-nous" data-i18n-key="nav.whoweare">Qui sommes-nous ?</button>
   <button id="btn-localisation" data-i18n-key="nav.localisation">Localisation</button>
   <button id="btn-contact" data-i18n-key="nav.contact">Contact</button>
   </div>
@@ -37,10 +37,10 @@
     <section id="accueil" class="tab active">
       <div class="hero">
         <h1 class="hero-title">
-          <img src="assets/image/JC2B_bof.svg" alt="JC2B" class="site-logo">
+          <img src="assets/image/JC2B_header-Picsart-AiImageEnhancer.jpg" alt="JC2B" class="site-logo">
           <span class="sr-only" data-i18n-key="home.title">JC2B</span>
         </h1>
-        <!-- Countdown overlayed on hero (desktop) -->
+  <!-- Compte à rebours superposé sur la zone « hero » (bureau) -->
         <div class="hero-countdown" role="timer" aria-live="polite" aria-atomic="true">
           <div class="countdown-number" id="countdown-days">--</div>
           <div class="countdown-text">
@@ -89,7 +89,7 @@
             width="200"
             height="200"
           >
-          <figcaption>Laurent Jacob — Junior Conference 2025</figcaption>
+          <figcaption>Laurent Jacob — CNRS, Sorbonne université — Junior Conference 2025</figcaption>
         </figure>
 
         <figure class="caption">
@@ -101,13 +101,15 @@
             width="200"
             height="200"
           >
-          <figcaption>Magali Richard — Junior Conference 2025</figcaption>
+          <figcaption>Magali Richard — CNRS TIMC-IMAG — Junior Conference 2025</figcaption>
         </figure>
       </div>
 
+      <p data-i18n-key="programme.text_1">Programme</p>
+
     </section>
 
-    <!-- Nouvel onglet "Qui sommes nous ?" -->
+  <!-- Nouvel onglet « Qui sommes-nous ? » -->
     <section id="qui-sommes-nous" class="tab">
       <h1 data-i18n-key="whoweare.title">Qui sommes-nous ?</h1>
       <p data-i18n-key="whoweare.text_1">Présentation de l'organisation, mission, équipe, etc.</p>
@@ -144,7 +146,7 @@
   </div>
 
   <script src="assets/js/main.js" defer></script>
-  <!-- Sponsors banner -->
+  <!-- Bannière des partenaires -->
   <div class="sponsors-banner" role="contentinfo" aria-label="Sponsors">
     <div>Partenaires :</div>
     <a href="https://www.universite-paris-saclay.fr/" target="_blank" rel="noopener">Université Paris-Saclay</a>
